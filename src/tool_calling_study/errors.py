@@ -24,3 +24,19 @@ class ProviderNotInstalled(StudyError):
 
 class ToolError(StudyError):
     """A ferramenta rejeitou a entrada. O loop registra a falha e segue."""
+
+
+def is_transport_failure(exc: BaseException) -> bool:
+    """Rede, provedor, chave ausente ou roteiro esgotado. Isso não vira nota do agente.
+
+    `ParseError` fica de fora: formato quebrado é comportamento do modelo e entra na métrica.
+    """
+    if isinstance(exc, ParseError):
+        return False
+    if isinstance(exc, (MissingCredential, ProviderNotInstalled, TimeoutError, ConnectionError)):
+        return True
+    # Import tardio: `fake` importa este módulo, e o nome da classe basta para não criar ciclo.
+    if type(exc).__module__.endswith("llm.fake") and type(exc).__name__ == "FakeLLMExhausted":
+        return True
+    root = type(exc).__module__.split(".", 1)[0]
+    return root in {"openai", "anthropic", "httpx", "httpcore", "requests", "urllib3"}

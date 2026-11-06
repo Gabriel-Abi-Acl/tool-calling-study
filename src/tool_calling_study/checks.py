@@ -1,5 +1,5 @@
-# Chamada desnecessária: ferramenta fora do gabarito ou listada como proibida.
-# Repetir uma ferramenta esperada não entra aqui; isso é outra métrica, do PR3.
+# Chamada desnecessária no loop: ferramenta fora do gabarito ou listada como proibida.
+# Repetir uma ferramenta esperada não entra aqui. O harness conta essa repetição como extra_call.
 
 from __future__ import annotations
 

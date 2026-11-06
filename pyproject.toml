@@ -6,6 +6,9 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
 
+[project.scripts]
+evaluate-tools = "tool_calling_study.evaluate:cli"
+
 [dependency-groups]
 dev = [
     "pytest>=8.3.0",
