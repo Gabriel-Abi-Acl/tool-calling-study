@@ -1,0 +1,107 @@
+[
+  {
+    "id": "single-capital-fr",
+    "kind": "single",
+    "prompt": "Qual é a capital da França?",
+    "expected_calls": [
+      {"tool": "lookup", "arguments": {"query": "capital of France"}}
+    ],
+    "forbidden_tools": ["calculator", "weather"],
+    "reference_answer": "Paris"
+  },
+  {
+    "id": "single-capital-br",
+    "kind": "single",
+    "prompt": "Qual é a capital do Brasil?",
+    "expected_calls": [
+      {"tool": "lookup", "arguments": {"query": "capital of Brazil"}}
+    ],
+    "forbidden_tools": ["calculator", "weather"],
+    "reference_answer": "Brasília"
+  },
+  {
+    "id": "single-product",
+    "kind": "single",
+    "prompt": "Quanto é 17 * 23?",
+    "expected_calls": [
+      {"tool": "calculator", "arguments": {"expression": "17 * 23"}}
+    ],
+    "forbidden_tools": ["lookup", "weather"],
+    "reference_answer": "391"
+  },
+  {
+    "id": "single-weather-sp",
+    "kind": "single",
+    "prompt": "Qual é a previsão fictícia cadastrada para São Paulo?",
+    "expected_calls": [
+      {"tool": "weather", "arguments": {"city": "Sao Paulo"}}
+    ],
+    "forbidden_tools": ["lookup", "calculator"],
+    "reference_answer": "ensolarado, 28C [fixture]"
+  },
+  {
+    "id": "multi-br-millions",
+    "kind": "multi",
+    "prompt": "Qual é a população do Brasil no fixture, em milhões? Consulte a base e converta com a calculadora.",
+    "expected_calls": [
+      {"tool": "lookup", "arguments": {"query": "population of Brazil"}},
+      {"tool": "calculator", "arguments": {"expression": "203000000 / 1000000"}}
+    ],
+    "forbidden_tools": ["weather"],
+    "reference_answer": "203"
+  },
+  {
+    "id": "multi-pt-thousands",
+    "kind": "multi",
+    "prompt": "Qual é a população de Portugal no fixture, em milhares? Consulte a base e converta com a calculadora.",
+    "expected_calls": [
+      {"tool": "lookup", "arguments": {"query": "population of Portugal"}},
+      {"tool": "calculator", "arguments": {"expression": "10000000 / 1000"}}
+    ],
+    "forbidden_tools": ["weather"],
+    "reference_answer": "10000"
+  },
+  {
+    "id": "multi-jp-half",
+    "kind": "multi",
+    "prompt": "Qual é a metade da população do Japão no fixture? Consulte a base e divida com a calculadora.",
+    "expected_calls": [
+      {"tool": "lookup", "arguments": {"query": "population of Japan"}},
+      {"tool": "calculator", "arguments": {"expression": "124000000 / 2"}}
+    ],
+    "forbidden_tools": ["weather"],
+    "reference_answer": "62000000"
+  },
+  {
+    "id": "abstain-greeting",
+    "kind": "abstain",
+    "prompt": "Diga olá em uma frase curta. Não use ferramentas.",
+    "expected_calls": [],
+    "forbidden_tools": ["lookup", "calculator", "weather"],
+    "reference_answer": null
+  },
+  {
+    "id": "abstain-preference",
+    "kind": "abstain",
+    "prompt": "Entre azul e verde, escolha uma cor e responda só com o nome dela. Não consulte dados externos.",
+    "expected_calls": [],
+    "forbidden_tools": ["lookup", "calculator", "weather"],
+    "reference_answer": null
+  },
+  {
+    "id": "abstain-python-function",
+    "kind": "abstain",
+    "prompt": "Explique em uma frase o que é uma função em Python. Não consulte o clima nem outras ferramentas.",
+    "expected_calls": [],
+    "forbidden_tools": ["lookup", "calculator", "weather"],
+    "reference_answer": null
+  },
+  {
+    "id": "abstain-repeat",
+    "kind": "abstain",
+    "prompt": "Sem usar ferramentas, repita apenas: dois mais dois são quatro.",
+    "expected_calls": [],
+    "forbidden_tools": ["lookup", "calculator", "weather"],
+    "reference_answer": null
+  }
+]
