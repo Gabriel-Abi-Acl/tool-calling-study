@@ -22,6 +22,13 @@ def test_calculator_and_lookup_return_fixture_values():
     assert forecast.ok and forecast.output == "ensolarado, 28C [fixture]"
 
 
+def test_registry_can_hide_the_distractor():
+    registry = build_fake_registry(("lookup", "calculator"))
+    assert tuple(spec.name for spec in registry.specs()) == ("lookup", "calculator")
+    with pytest.raises(ToolError):
+        build_fake_registry(("lookup", "telescope"))
+
+
 def test_unknown_query_and_unknown_tool_do_not_invent_a_value():
     registry = build_fake_registry()
     missing = registry.execute(ToolCall("lookup", {"query": "capital of Mars"}))

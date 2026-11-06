@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import re
 import unicodedata
+from collections.abc import Sequence
 
 from tool_calling_study.errors import ToolError
 from tool_calling_study.tools.arithmetic import evaluate_arithmetic, format_number
@@ -56,9 +57,19 @@ _FORECASTS = {
 }
 
 
-def build_fake_registry() -> ToolRegistry:
-    """Catálogo usado pelos testes e pelo loop deste PR."""
-    return ToolRegistry((lookup_tool(), calculator_tool(), weather_tool()))
+def build_fake_registry(names: Sequence[str] | None = None) -> ToolRegistry:
+    """Catálogo falso. Com `names`, só essas ferramentas aparecem, na ordem pedida."""
+    tools = (lookup_tool(), calculator_tool(), weather_tool())
+    if names is None:
+        return ToolRegistry(tools)
+    by_name = {tool.spec.name: tool for tool in tools}
+    selected = []
+    for name in names:
+        tool = by_name.get(name)
+        if tool is None:
+            raise ToolError(f"ferramenta desconhecida: {name}")
+        selected.append(tool)
+    return ToolRegistry(tuple(selected))
 
 
 def lookup_tool() -> RegisteredTool:

@@ -23,10 +23,16 @@ class LLMMessage:
 
 @dataclass(frozen=True)
 class LLMResponse:
-    """Resposta já normalizada: texto e, quando houver, chamadas estruturadas."""
+    """Resposta já normalizada: texto e, quando houver, chamadas estruturadas.
+
+    Token e custo ficam vazios até o cliente informar. O harness não estima preço.
+    """
 
     content: str
     tool_calls: tuple[ToolCall, ...] = ()
+    prompt_tokens: int | None = None
+    completion_tokens: int | None = None
+    estimated_cost_usd: float | None = None
 
 
 class LLMClient(Protocol):
